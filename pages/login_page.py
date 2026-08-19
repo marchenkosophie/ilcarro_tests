@@ -13,6 +13,7 @@ class LoginPage:
     CONFIRMATION_TEXT = (By.CSS_SELECTOR, "h3")
     OK_BTN = (By.XPATH, "//*[text()='OK']")
     SIGN_OUT_BTN = (By.XPATH, "//*[text()='Log out']")
+    LOGIN_FAILED = (By.XPATH, "//*[text()='\"Login or Password incorrect\"']")
 
 
     def __init__(self, driver):
@@ -63,3 +64,17 @@ class LoginPage:
             return True
         except TimeoutException:
             return False
+
+
+    def is_not_logged(self):
+        try:
+            WebDriverWait(self.driver, timeout=5).until(
+                EC.visibility_of_element_located(self.LOGIN_FAILED)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+
+    def is_submit_button_enabled(self):
+        return self.driver.find_element(*self.YALLA_BUTTON).is_enabled()
