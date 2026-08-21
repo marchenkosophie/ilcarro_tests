@@ -14,6 +14,7 @@ class LoginPage:
     OK_BTN = (By.XPATH, "//*[text()='OK']")
     SIGN_OUT_BTN = (By.XPATH, "//*[text()='Log out']")
     LOGIN_FAILED = (By.XPATH, "//*[text()='\"Login or Password incorrect\"']")
+    ERROR_MESSAGE = (By.CLASS_NAME, "error")
 
 
     def __init__(self, driver):
@@ -78,3 +79,12 @@ class LoginPage:
 
     def is_submit_button_enabled(self):
         return self.driver.find_element(*self.YALLA_BUTTON).is_enabled()
+
+
+    def error_message_text(self):
+        element = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(self.ERROR_MESSAGE)
+        )
+        return element.text
+
+

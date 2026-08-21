@@ -74,3 +74,13 @@ def test_login_invalid_password_format(driver):
     login_page.fill_password("")
 
     assert login_page.is_submit_button_enabled() == False
+
+
+def test_login_invalid_email_format_1(driver):
+    login_page = LoginPage(driver)
+
+    login_page.open_login_form()
+    login_page.fill_email("margogmail.com")
+    login_page.fill_password(VALID_PASSWORD)
+    assert login_page.error_message_text()=="Wrong email format"
+    assert login_page.is_submit_button_enabled() == False
